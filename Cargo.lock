@@ -346,6 +346,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-slug"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "tpt-zero-spin"
 version = "0.1.0"
 dependencies = [
@@ -360,10 +368,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-url-encode"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "tpt-zero-utf8"
 version = "0.1.0"
 dependencies = [
  "proptest",
+]
+
+[[package]]
+name = "tpt-zero-xml-escape"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-numstr",
+ "tpt-zero-utf8",
 ]
 
 [[package]]

@@ -1,0 +1,21 @@
+[package]
+name = "tpt-zero-url-encode"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "RFC 3986 percent-encoding/decoding. #![no_std], zero dependencies."
+categories = ["no-std", "encoding", "web-programming"]
+keywords = ["url", "percent-encode", "urlencode", "no_std", "rfc3986"]
+
+[dependencies]
+tpt-zero-utf8 = { path = "../tpt-zero-utf8", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []

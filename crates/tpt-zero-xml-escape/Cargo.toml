@@ -1,0 +1,22 @@
+[package]
+name = "tpt-zero-xml-escape"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "XML entity escaping/unescaping (5 predefined entities + numeric refs). #![no_std], zero dependencies, buffer-writer core API."
+categories = ["no-std", "encoding", "text-processing"]
+keywords = ["xml", "html", "escape", "no_std", "entity"]
+
+[dependencies]
+tpt-zero-utf8 = { path = "../tpt-zero-utf8", version = "0.1.0" }
+tpt-zero-numstr = { path = "../tpt-zero-numstr", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []
