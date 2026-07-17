@@ -1,0 +1,19 @@
+[package]
+name = "tpt-zero-utf8"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "UTF-8 validation, char-boundary finding, and safe scalar iteration. #![no_std], zero dependencies."
+categories = ["no-std", "text-processing", "encoding"]
+keywords = ["utf8", "unicode", "no_std", "validation"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

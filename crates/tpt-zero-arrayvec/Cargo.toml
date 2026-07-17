@@ -1,0 +1,19 @@
+[package]
+name = "tpt-zero-arrayvec"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Vec-like growable array with fixed capacity. #![no_std], zero dependencies, sound Drop."
+categories = ["no-std", "data-structures"]
+keywords = ["arrayvec", "no_std", "vec", "fixed-capacity"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

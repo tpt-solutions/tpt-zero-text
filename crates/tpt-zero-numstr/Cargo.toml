@@ -1,0 +1,20 @@
+[package]
+name = "tpt-zero-numstr"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Integer and float to string conversion and back. #![no_std], zero dependencies, with an alloc layer for String-returning helpers."
+categories = ["no-std", "encoding", "parsing"]
+keywords = ["number", "format", "parse", "no_std"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []

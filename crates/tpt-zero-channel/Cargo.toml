@@ -1,0 +1,19 @@
+[package]
+name = "tpt-zero-channel"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Bounded lock-free MPSC channel for #![no_std]. Zero dependencies."
+categories = ["no-std", "concurrency", "data-structures"]
+keywords = ["channel", "mpsc", "lock-free", "no_std"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

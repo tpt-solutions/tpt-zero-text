@@ -1,0 +1,19 @@
+[package]
+name = "tpt-zero-color"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "RGB/RGBA/HSV color types with hex parsing. #![no_std], zero dependencies."
+categories = ["no-std", "graphics", "data-structures"]
+keywords = ["color", "rgb", "hsv", "hex", "no_std"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

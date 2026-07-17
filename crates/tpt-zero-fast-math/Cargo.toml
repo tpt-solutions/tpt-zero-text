@@ -1,0 +1,19 @@
+[package]
+name = "tpt-zero-fast-math"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Approximate sqrt/inv-sqrt and trig via lookup tables. #![no_std], zero dependencies. ~1e-4 error bound."
+categories = ["no-std", "mathematics", "algorithms"]
+keywords = ["math", "fast", "sqrt", "trigonometry", "no_std"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

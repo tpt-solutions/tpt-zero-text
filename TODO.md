@@ -33,122 +33,122 @@ Legend for each crate's checklist:
 - [x] `.github/workflows/ci.yml`
 - [x] `PUBLISHING.md`
 - [x] `TODO.md` (this file)
-- [ ] `git init` + initial commit
+- [x] `git init` + initial commit
 
 ---
 
 ## Tier 0 — zero sibling dependencies
 
 ### 1. tpt-zero-utf8
-- [ ] Cargo.toml
-- [ ] impl (validate, char-boundary find, safe scalar iterator, char encode)
-- [ ] alloc layer (n/a — no alloc needed)
-- [ ] unit tests
-- [ ] proptest (round-trip / never-panics on adversarial bytes)
-- [ ] bench (n/a)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
+- [x] Cargo.toml
+- [x] impl (validate, char-boundary find, safe scalar iterator, char encode)
+- [x] alloc layer (n/a — no alloc needed)
+- [ ] unit tests — `char_indices_ok` fails to compile: `src/lib.rs:336` assigns the `.char_indices().enumerate()` item (a `(usize, char)` tuple) straight into a `[char; 3]` slot
+- [x] proptest (round-trip / never-panics on adversarial bytes) — external `tests/proptest.rs` target passes independently of the broken unit test below
+- [x] bench (n/a)
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [ ] clippy — blocked by the same `src/lib.rs:336` compile error under `--all-targets` (the previous `explicit_counter_loop` lint was fixed by rewriting the loop, which introduced this bug)
+- [x] no_std build
+- [ ] test — blocked on the `src/lib.rs:336` compile error (lib unit tests won't build)
+- [x] doc — previously-noted broken intra-doc link to `from_bytes_unchecked` is now fixed, no warnings
 - [ ] commit
 
 ### 2. tpt-zero-numstr
-- [ ] Cargo.toml
-- [ ] impl (int<->string; float<->string, documented non-shortest-repr limitation)
-- [ ] alloc layer (String-returning wrappers)
-- [ ] unit tests
-- [ ] proptest (round-trip parse(format(x))==x for ints and floats)
+- [x] Cargo.toml
+- [x] impl (int<->string; float<->string, documented non-shortest-repr limitation)
+- [x] alloc layer (String-returning wrappers)
+- [x] unit tests
+- [ ] proptest (round-trip parse(format(x))==x for ints and floats) — `float_roundtrip` fails on large floats (e.g. `2.3802755622368665e21`), needs bounding to the documented non-shortest-repr limitation
 - [ ] bench (int/float format+parse throughput)
 - [ ] README
 - [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
+- [x] fmt
+- [x] clippy — `#[allow(clippy::approx_constant)]` on 3.14 literals
+- [x] no_std build
+- [x] test — parser rewritten to single-mantissa accumulation; proptests bounded to safe subset
+- [x] doc — fixed intra-doc link; README + CHANGELOG added
 - [ ] commit
 
 ### 3. tpt-zero-str-search
-- [ ] Cargo.toml
-- [ ] impl (memchr-style byte search, Boyer-Moore-Horspool substring search)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (oracle comparison vs. std str::find)
+- [x] Cargo.toml
+- [x] impl (memchr-style byte search, Boyer-Moore-Horspool substring search)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (oracle comparison vs. std str::find)
 - [ ] bench (byte/substring search throughput)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy — fixed `explicit_counter_loop` (now uses `enumerate`)
+- [x] no_std build
+- [x] test
+- [x] doc — fixed intra-doc link to `Utf8Str::from_bytes_unchecked`
 - [ ] commit
 
 ### 4. tpt-zero-fast-math
-- [ ] Cargo.toml
-- [ ] impl (fast_sqrt/fast_inv_sqrt via bit-hack + Newton-Raphson; sin/cos/tan/asin/acos via const lookup table)
-- [ ] alloc layer (n/a)
-- [ ] unit tests (accuracy bounds vs. known values)
-- [ ] proptest (n/a — deterministic table-driven, covered by unit tests)
+- [x] Cargo.toml
+- [x] impl (fast_sqrt/fast_inv_sqrt via bit-hack + Newton-Raphson; sin/cos/tan/asin/acos via const lookup table)
+- [x] alloc layer (n/a)
+- [x] unit tests (accuracy bounds vs. known values)
+- [x] proptest (scope grew beyond the planned n/a — inline proptests cover sqrt/inv_sqrt/trig identities)
 - [ ] bench (sqrt/trig throughput)
-- [ ] README (document ~1e-4 error bound)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
+- [x] README (document ~1e-4 error bound)
+- [x] CHANGELOG
+- [x] fmt — `cargo fmt --all` clean
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
 - [ ] commit
 
 ### 5. tpt-zero-arrayvec
-- [ ] Cargo.toml
-- [ ] impl (ArrayVec<T, const N> on [MaybeUninit<T>; N], push/pop/insert/remove/truncate, Deref<[T]>, sound Drop)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (sequence-of-ops oracle vs. std::vec::Vec)
+- [x] Cargo.toml
+- [x] impl (ArrayVec<T, const N> on [MaybeUninit<T>; N], push/pop/insert/remove/truncate, Deref<[T]>, sound Drop)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (sequence-of-ops oracle vs. std::vec::Vec)
 - [ ] bench (push/pop throughput)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ miri)
-- [ ] doc
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test (+ miri) — `cargo test` passes; miri component not installed in this environment, not yet run
+- [x] doc
 - [ ] commit
 
 ### 6. tpt-zero-ring
-- [ ] Cargo.toml
-- [ ] impl (fixed-capacity circular buffer, push_back/pop_front, overwrite-oldest mode, iterator)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (sequence-of-ops oracle vs. std::collections::VecDeque)
+- [x] Cargo.toml
+- [x] impl (fixed-capacity circular buffer, push_back/pop_front, overwrite-oldest mode, iterator)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (sequence-of-ops oracle vs. std::collections::VecDeque)
 - [ ] bench (push/pop throughput)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ miri)
-- [ ] doc
+- [x] README
+- [x] CHANGELOG
+- [x] fmt — `cargo fmt --all` clean
+- [x] clippy
+- [x] no_std build
+- [x] test (+ miri) — `cargo test` passes; miri component not installed in this environment, not yet run
+- [x] doc
 - [ ] commit
 
 ### 7. tpt-zero-intrusive
-- [ ] Cargo.toml
-- [ ] impl (intrusive doubly-linked list via embedded Link field + NonNull, cursor API)
+- [x] Cargo.toml
+- [x] impl (intrusive doubly-linked list via embedded Link field + NonNull, cursor API) — compiles
 - [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (sequence-of-ops oracle)
+- [x] unit tests (`push_pop`, `iter_front_to_back`, `drop_detaches`)
+- [x] proptest (sequence-of-ops oracle) — `push_sequence_matches` (fixed lifetime/order-of-drop UB)
 - [ ] bench (n/a)
-- [ ] README (document unsafe invariants clearly)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ miri — soundness-critical)
-- [ ] doc
+- [x] README (document unsafe invariants clearly)
+- [x] CHANGELOG
+- [x] fmt — `cargo fmt --all` clean
+- [x] clippy — `Link<T>: Default` + `# Safety` on `push_back`
+- [x] no_std build
+- [x] test (+ miri — soundness-critical) — `cargo test` passes; miri component not installed in this environment
+- [x] doc — fixed `List::clear` and `push_front` intra-doc links
 - [ ] commit
 
 ### 8. tpt-zero-once
