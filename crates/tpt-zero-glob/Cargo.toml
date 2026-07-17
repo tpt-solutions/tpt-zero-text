@@ -1,0 +1,21 @@
+[package]
+name = "tpt-zero-glob"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Glob pattern matching (*, ?, [...], **). #![no_std], zero dependencies, byte-slice based."
+categories = ["no-std", "text-processing", "pattern-matching"]
+keywords = ["glob", "pattern", "no_std", "match", "wildcard"]
+
+[dependencies]
+tpt-zero-str-search = { path = "../tpt-zero-str-search", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []

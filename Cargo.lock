@@ -302,6 +302,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-glob"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-str-search",
+]
+
+[[package]]
 name = "tpt-zero-intrusive"
 version = "0.1.0"
 dependencies = [
