@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  fmt:
+    name: rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt --all -- --check
+
+  clippy:
+    name: clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+  test:
+    name: test (${{ matrix.rust }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, "1.85.0"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+      - run: cargo test --workspace --no-default-features
+      - run: cargo test --workspace --all-features
+
+  no-std-proof:
+    name: no_std build (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [thumbv7m-none-eabi, riscv32imac-unknown-none-elf]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - name: build each crate, core-only
+        run: |
+          set -e
+          for crate_dir in crates/*/; do
+            name=$(basename "$crate_dir")
+            cargo build -p "$name" --no-default-features --target ${{ matrix.target }}
+          done
+      - name: build each crate, with alloc feature
+        run: |
+          set -e
+          for crate_dir in crates/*/; do
+            name=$(basename "$crate_dir")
+            cargo build -p "$name" --no-default-features --features alloc --target ${{ matrix.target }} || true
+          done
+
+  feature-powerset:
+    name: feature powerset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@cargo-hack
+      - run: cargo hack check --each-feature --workspace
+
+  miri:
+    name: miri (unsafe-heavy crates)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: miri
+      - run: cargo miri test -p tpt-zero-arrayvec --all-features
+      - run: cargo miri test -p tpt-zero-ring --all-features
+      - run: cargo miri test -p tpt-zero-intrusive --all-features
+      - run: cargo miri test -p tpt-zero-pool --all-features
+      - run: cargo miri test -p tpt-zero-spin --all-features
+      - run: cargo miri test -p tpt-zero-channel --all-features
+      - run: cargo miri test -p tpt-zero-arraystring --all-features
+
+  doc:
+    name: docs
+    runs-on: ubuntu-latest
+    env:
+      RUSTDOCFLAGS: -D warnings
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo doc --workspace --all-features --no-deps

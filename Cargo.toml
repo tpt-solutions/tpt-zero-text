@@ -1,0 +1,18 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tpt-solutions/tpt-zero-text"
+authors = ["TPT Solutions <opensource@tptsolutions.co.nz>"]
+
+[workspace.dependencies]
+# Intentionally empty of any production dependency.
+# Dev-only tooling shared across crates (never appears in a published crate's
+# [dependencies], only in [dev-dependencies] via `dep.workspace = true`):
+proptest = "1.5"
+criterion = "0.5"

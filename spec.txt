@@ -1,0 +1,138 @@
+ Repository 1: tpt-zero-bytes
+The Foundational Layer: Pure core, Zero Allocation, Maximum Speed
+Purpose:
+To provide the absolute bedrock of data manipulation, encoding, and integrity checking for environments where no heap allocation is permitted and every CPU cycle matters.
+The Problem It Solves:
+In bare-metal embedded systems, bootloaders, and strict WASM environments, developers cannot afford the overhead of alloc or external crates. Yet, they constantly need to encode bytes, calculate checksums, or hash data. Existing crates often pull in unnecessary dependencies or assume an OS is present. tpt-zero-bytes solves this by offering pure, mathematically verified, #![no_std] (core-only) utilities.
+Target Audience:
+Embedded engineers, kernel developers, bootloader authors, and performance-obsessed systems programmers.
+Crate Roster (20 Crates | Pure core, no alloc):
+tpt-zero-base64: Standard and URL-safe Base64 encoding/decoding using lookup tables.
+tpt-zero-hex: Blazing-fast, zero-allocation hexadecimal encoding and decoding.
+tpt-zero-endian: Zero-cost, const-evaluable byte-order (endianness) conversion.
+tpt-zero-varint: Variable-length integer encoding (e.g., LEB128) for compact payloads.
+tpt-zero-crc: CRC8, CRC16, and CRC32 calculations for data integrity.
+tpt-zero-checksum: Adler32 and Fletcher checksums.
+tpt-zero-fnv: FNV-1a hashing, optimized for no_std hash maps.
+tpt-zero-siphash: SipHash implementation for HashDoS resistance.
+tpt-zero-murmur: MurmurHash3 for general non-cryptographic hashing.
+tpt-zero-xxhash: Pure Rust XXH32/XXH64 implementation.
+tpt-zero-cobs: Consistent Overhead Byte Stuffing for reliable embedded serial comms.
+tpt-zero-bitset: Fixed-size, highly optimized bit arrays for state tracking.
+tpt-zero-bitfield: Compile-time or runtime safe bitfield accessors.
+tpt-zero-bytes: Safe byte slice manipulation utilities (split, copy, compare).
+tpt-zero-mem: Safe, no_std memory utilities (e.g., secure zeroing).
+tpt-zero-uuid: UUID v4 generation and parsing via pure math.
+tpt-zero-bloom: Fixed-size Bloom filter for probabilistic set membership.
+tpt-zero-mac: MAC address parsing and formatting.
+tpt-zero-ip: IPv4/IPv6 address parsing and manipulation (pure core).
+tpt-zero-compact: Compact integer encoding for network payloads.
+📦 Repository 2: tpt-zero-text
+The Structural Layer: Parsing, Text, Math, and Safe Collections
+Purpose:
+To provide robust, zero-external-dependency data structures, text processing, and mathematical primitives that gracefully scale from core to alloc to std via feature flags.
+The Problem It Solves:
+The Rust core library intentionally lacks string manipulation, complex parsing, and dynamic collections. Developers building no_std applications are forced to either write their own buggy parsers or pull in massive crates like serde or nalgebra. tpt-zero-text provides lightweight, purpose-built alternatives that respect memory constraints.
+Target Audience:
+WASM developers, game developers, IoT application writers, and developers building configuration-driven no_std systems.
+Crate Roster (25 Crates | core + optional alloc feature):
+tpt-zero-json: A pull-based, zero-allocation JSON tokenizer and parser.
+tpt-zero-csv: Iterator-based, RFC 4180 compliant CSV parsing.
+tpt-zero-toml-lite: A restricted, safe TOML parser for key-value and basic tables.
+tpt-zero-ini: Simple INI configuration file parsing.
+tpt-zero-utf8: UTF-8 validation, character boundary finding, and safe scalar iteration.
+tpt-zero-numstr: Ultra-fast integer and float to string conversion (and vice versa).
+tpt-zero-str-search: Fast substring search algorithms (e.g., memchr-like).
+tpt-zero-glob: Glob pattern matching (e.g., *.rs, src/**/*.txt).
+tpt-zero-slug: String normalization for URL-safe slugs.
+tpt-zero-url-encode: Percent-encoding and decoding for URLs.
+tpt-zero-xml-escape: Utilities to escape and unescape XML/HTML entities.
+tpt-zero-vec: 2D, 3D, and 4D vector math with full operator overloading.
+tpt-zero-matrix: 3x3 and 4x4 matrix transformations.
+tpt-zero-quat: Quaternions for 3D rotation.
+tpt-zero-fast-math: Approximate sin/cos/sqrt using lookup tables.
+tpt-zero-color: RGB, RGBA, HSV conversions and hex parsing.
+tpt-zero-arrayvec: A Vec-like structure backed by a fixed-size array.
+tpt-zero-arraystring: A String-like structure backed by a fixed-size array.
+tpt-zero-ring: A fixed-capacity circular buffer for streaming data.
+tpt-zero-linear-map: A map backed by a sorted Vec, ideal for small datasets.
+tpt-zero-pool: An object pool to reuse allocations and prevent heap fragmentation.
+tpt-zero-intrusive: Intrusive doubly-linked lists (zero extra allocation).
+tpt-zero-once: no_std lazy initialization / run-once logic.
+tpt-zero-spin: Spinlocks for no_std mutexes.
+tpt-zero-channel: Lock-free MPSC queues using atomics.
+📦 Repository 3: tpt-zero-formal
+The Next-Generation Layer: Verification, Contracts, and Probabilistic Computing
+Purpose:
+To provide the runtime building blocks for formal verification, design-by-contract, and probabilistic computing in Rust. This repo acts as the direct bridge between high-assurance TPT languages (tpt-telos, tpt-eidos) and safe, mathematically sound Rust execution, while providing the foundational math for tpt-augur.
+The Problem It Solves:
+Rust's borrow checker prevents memory safety issues, but it does not prevent logical errors (e.g., dividing by zero, state machine violations, or out-of-bounds indices). Furthermore, probabilistic and AI systems require rigorous, deterministic, and sound mathematical primitives that standard crates do not provide in a no_std context. tpt-zero-formal provides lightweight, zero-dep primitives that make verification explicit, ergonomic, and mathematically sound.
+Target Audience:
+Developers using tpt-eidos or tpt-telos, safety-critical systems engineers (DO-178C, ISO 26262), and architects building formally verified microservices and AI systems.
+Crate Roster (30 Crates | core + alloc, focused on correctness):
+Design-by-Contract & Verification:
+tpt-zero-contract: requires! and ensures! macros for design-by-contract programming.
+tpt-zero-invariant: Traits and macros for asserting state machine invariants at compile-time or runtime.
+tpt-zero-bounded: Zero-cost wrapper types that guarantee numeric bounds (e.g., BoundedInt<0, 100>).
+tpt-zero-safe-cast: Panic-free, explicitly verified numeric casting traits.
+tpt-zero-fsm: A zero-allocation, strongly-typed Finite State Machine builder.
+tpt-zero-ghost: Ghost state markers and phantom types for tracking formal verification state.
+tpt-zero-smt-lite: Basic SMT-style boolean and integer constraint helpers.
+tpt-zero-precond: Precondition checking utilities with detailed error reporting.
+tpt-zero-postcond: Postcondition validation and result verification.
+tpt-zero-loop-inv: Loop invariant checking for iterative algorithms.
+Probabilistic & Statistical Computing:
+11. tpt-zero-prob: Lightweight probabilistic types (e.g., Dist<f64>) and statistical helpers.
+12. tpt-zero-stats: Core statistical functions (mean, variance, std dev, percentiles).
+13. tpt-zero-rand: Deterministic, seedable PRNGs (Xorshift, PCG) for reproducible randomness.
+14. tpt-zero-dist: Common probability distributions (Normal, Uniform, Bernoulli, Poisson).
+15. tpt-zero-sampler: Efficient sampling algorithms for probabilistic inference.
+16. tpt-zero-bayes: Bayesian inference primitives and conjugate priors.
+17. tpt-zero-monte-carlo: Monte Carlo simulation utilities with variance reduction.
+18. tpt-zero-markov: Markov chain representations and transition matrix operations.
+Linear Algebra & Tensor Operations:
+19. tpt-zero-tensor: Fixed-rank tensor types for multi-dimensional data.
+20. tpt-zero-linalg: Core linear algebra operations (dot product, cross product, norms).
+21. tpt-zero-decomp: Matrix decompositions (LU, QR, Cholesky) for numerical stability.
+22. tpt-zero-solver: Linear system solvers (Gaussian elimination, iterative methods).
+23. tpt-zero-eigen: Eigenvalue and eigenvector computation for small matrices.
+24. tpt-zero-grad: Automatic differentiation primitives for gradient computation.
+Type-Level & Compile-Time Verification:
+25. tpt-zero-type-level: Type-level arithmetic and constraints using const generics.
+26. tpt-zero-phantom: Advanced phantom type patterns for zero-cost abstractions.
+27. tpt-zero-witness: Witness types that carry proofs of properties.
+28. tpt-zero-refinement: Refinement types that encode predicates in the type system.
+29. tpt-zero-newtype: Safe newtype wrappers with automatic derivation.
+30. tpt-zero-assert-const: Compile-time assertion utilities for const contexts.
+Ecosystem Synergy:
+This is the crown jewel of the TPT open-source strategy.
+It provides the runtime contract-checking macros that tpt-telos transpiles its requires/ensures blocks into.
+It offers the type-level guarantees and SMT primitives that tpt-eidos relies on to prove "types are theorems, programs are proofs."
+It supplies the foundational probabilistic, tensor, and gradient data structures that tpt-augur uses for hardware-accelerated, formally verified probabilistic programming and AI inference.
+🏗️ Unified Workspace Strategy Across All 3 Repos
+# Example: tpt-zero-formal/Cargo.toml (Root)
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tpt-solutions/tpt-zero-formal"
+authors = ["TPT Solutions <opensource@tptsolutions.co.nz>"]
+
+[workspace.dependencies]
+# Intentionally empty to enforce ZERO external production dependencies.
+
+[workspace.dev-dependencies]
+proptest = "1.0"
+criterion = "0.5"
+
+
+The Power of Unified Naming
+With the tpt-zero-* prefix across all 75 crates:
+Instant Discoverability: Searching "tpt-zero" on crates.io returns your entire ecosystem
+Clear Hierarchy: Developers immediately understand these are related, high-quality, zero-dep crates
+Professional Branding: Creates the impression of a comprehensive, well-organized toolkit
+Easy Cross-References: When documenting one crate, you can easily reference others (See also: tpt-zero-json)
