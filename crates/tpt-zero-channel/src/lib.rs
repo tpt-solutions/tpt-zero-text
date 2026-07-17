@@ -109,9 +109,7 @@ impl<'a, T, const N: usize> Sender<'a, T, N> {
             unsafe {
                 *self.channel.slots[head].value.get() = Some(value);
             }
-            self.channel.slots[head]
-                .ready
-                .store(1, Ordering::Release);
+            self.channel.slots[head].ready.store(1, Ordering::Release);
             return Ok(());
         }
     }

@@ -344,29 +344,29 @@ mod proptests {
         }
     }
 
-        proptest! {
-            /// Front-to-back iteration after a sequence of pushes matches the order.
-            #[test]
-            fn push_sequence_matches(values in proptest::collection::vec(0..1000u32, 1..64)) {
-                let expected: alloc::vec::Vec<u32> = values.clone();
-                let mut pool: alloc::vec::Vec<N> = expected
-                    .iter()
-                    .map(|&v| N { link: Link::new(), value: v })
-                    .collect();
-                let mut list: List<N> = List::new();
-                unsafe {
-                    for n in pool.iter_mut() {
-                        list.push_back(n);
-                    }
+    proptest! {
+        /// Front-to-back iteration after a sequence of pushes matches the order.
+        #[test]
+        fn push_sequence_matches(values in proptest::collection::vec(0..1000u32, 1..64)) {
+            let expected: alloc::vec::Vec<u32> = values.clone();
+            let mut pool: alloc::vec::Vec<N> = expected
+                .iter()
+                .map(|&v| N { link: Link::new(), value: v })
+                .collect();
+            let mut list: List<N> = List::new();
+            unsafe {
+                for n in pool.iter_mut() {
+                    list.push_back(n);
                 }
-                let out: alloc::vec::Vec<u32> = list.iter().map(|n| n.value).collect();
-                prop_assert_eq!(out, expected.clone());
-                prop_assert_eq!(list.len(), expected.len());
-                // The list only borrows the nodes via raw pointers; drop it
-                // *before* the pool so its `Drop` (which walks the node links)
-                // never touches freed memory.
-                drop(list);
-                drop(pool);
             }
+            let out: alloc::vec::Vec<u32> = list.iter().map(|n| n.value).collect();
+            prop_assert_eq!(out, expected.clone());
+            prop_assert_eq!(list.len(), expected.len());
+            // The list only borrows the nodes via raw pointers; drop it
+            // *before* the pool so its `Drop` (which walks the node links)
+            // never touches freed memory.
+            drop(list);
+            drop(pool);
         }
+    }
 }

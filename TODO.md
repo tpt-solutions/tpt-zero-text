@@ -39,20 +39,27 @@ Legend for each crate's checklist:
 
 ## Tier 0 — zero sibling dependencies
 
+> Status (2026-07-17): all 11 Tier 0 crates are implemented, with green
+> `fmt`, `clippy --all-features -- -D warnings`, `no_std` build
+> (`thumbv7m-none-eabi`), `cargo test` (both feature modes + external
+> proptest targets), and `cargo doc --all-features -D warnings`. The only
+> outstanding gate per crate is **commit**. Only `bench` (criterion) remains
+> unfilled where marked; it is optional for the 0.1.0 release.
+
 ### 1. tpt-zero-utf8
 - [x] Cargo.toml
 - [x] impl (validate, char-boundary find, safe scalar iterator, char encode)
 - [x] alloc layer (n/a — no alloc needed)
-- [ ] unit tests — `char_indices_ok` fails to compile: `src/lib.rs:336` assigns the `.char_indices().enumerate()` item (a `(usize, char)` tuple) straight into a `[char; 3]` slot
-- [x] proptest (round-trip / never-panics on adversarial bytes) — external `tests/proptest.rs` target passes independently of the broken unit test below
+- [x] unit tests (`char_indices_ok` compiles & passes)
+- [x] proptest (round-trip / never-panics on adversarial bytes) — external `tests/proptest.rs`
 - [x] bench (n/a)
 - [x] README
 - [x] CHANGELOG
 - [x] fmt
-- [ ] clippy — blocked by the same `src/lib.rs:336` compile error under `--all-targets` (the previous `explicit_counter_loop` lint was fixed by rewriting the loop, which introduced this bug)
+- [x] clippy
 - [x] no_std build
-- [ ] test — blocked on the `src/lib.rs:336` compile error (lib unit tests won't build)
-- [x] doc — previously-noted broken intra-doc link to `from_bytes_unchecked` is now fixed, no warnings
+- [x] test
+- [x] doc
 - [ ] commit
 
 ### 2. tpt-zero-numstr
@@ -60,15 +67,15 @@ Legend for each crate's checklist:
 - [x] impl (int<->string; float<->string, documented non-shortest-repr limitation)
 - [x] alloc layer (String-returning wrappers)
 - [x] unit tests
-- [ ] proptest (round-trip parse(format(x))==x for ints and floats) — `float_roundtrip` fails on large floats (e.g. `2.3802755622368665e21`), needs bounding to the documented non-shortest-repr limitation
+- [x] proptest (round-trip parse(format(x))==x for ints and floats, bounded to safe subset)
 - [ ] bench (int/float format+parse throughput)
-- [ ] README
-- [ ] CHANGELOG
+- [x] README
+- [x] CHANGELOG
 - [x] fmt
-- [x] clippy — `#[allow(clippy::approx_constant)]` on 3.14 literals
+- [x] clippy
 - [x] no_std build
-- [x] test — parser rewritten to single-mantissa accumulation; proptests bounded to safe subset
-- [x] doc — fixed intra-doc link; README + CHANGELOG added
+- [x] test
+- [x] doc
 - [ ] commit
 
 ### 3. tpt-zero-str-search
@@ -81,10 +88,10 @@ Legend for each crate's checklist:
 - [x] README
 - [x] CHANGELOG
 - [x] fmt
-- [x] clippy — fixed `explicit_counter_loop` (now uses `enumerate`)
+- [x] clippy
 - [x] no_std build
 - [x] test
-- [x] doc — fixed intra-doc link to `Utf8Str::from_bytes_unchecked`
+- [x] doc
 - [ ] commit
 
 ### 4. tpt-zero-fast-math
@@ -92,11 +99,11 @@ Legend for each crate's checklist:
 - [x] impl (fast_sqrt/fast_inv_sqrt via bit-hack + Newton-Raphson; sin/cos/tan/asin/acos via const lookup table)
 - [x] alloc layer (n/a)
 - [x] unit tests (accuracy bounds vs. known values)
-- [x] proptest (scope grew beyond the planned n/a — inline proptests cover sqrt/inv_sqrt/trig identities)
+- [x] proptest (inline proptests cover sqrt/inv_sqrt/trig identities)
 - [ ] bench (sqrt/trig throughput)
 - [x] README (document ~1e-4 error bound)
 - [x] CHANGELOG
-- [x] fmt — `cargo fmt --all` clean
+- [x] fmt
 - [x] clippy
 - [x] no_std build
 - [x] test
@@ -115,7 +122,7 @@ Legend for each crate's checklist:
 - [x] fmt
 - [x] clippy
 - [x] no_std build
-- [x] test (+ miri) — `cargo test` passes; miri component not installed in this environment, not yet run
+- [x] test (miri not installed in this env; recommended before publish)
 - [x] doc
 - [ ] commit
 
@@ -128,91 +135,91 @@ Legend for each crate's checklist:
 - [ ] bench (push/pop throughput)
 - [x] README
 - [x] CHANGELOG
-- [x] fmt — `cargo fmt --all` clean
+- [x] fmt
 - [x] clippy
 - [x] no_std build
-- [x] test (+ miri) — `cargo test` passes; miri component not installed in this environment, not yet run
+- [x] test (miri not installed in this env; recommended before publish)
 - [x] doc
 - [ ] commit
 
 ### 7. tpt-zero-intrusive
 - [x] Cargo.toml
-- [x] impl (intrusive doubly-linked list via embedded Link field + NonNull, cursor API) — compiles
-- [ ] alloc layer (n/a)
+- [x] impl (intrusive doubly-linked list via embedded Link field + NonNull, cursor API)
+- [x] alloc layer (n/a)
 - [x] unit tests (`push_pop`, `iter_front_to_back`, `drop_detaches`)
-- [x] proptest (sequence-of-ops oracle) — `push_sequence_matches` (fixed lifetime/order-of-drop UB)
+- [x] proptest (sequence-of-ops oracle) — `push_sequence_matches`
 - [ ] bench (n/a)
 - [x] README (document unsafe invariants clearly)
 - [x] CHANGELOG
-- [x] fmt — `cargo fmt --all` clean
-- [x] clippy — `Link<T>: Default` + `# Safety` on `push_back`
+- [x] fmt
+- [x] clippy
 - [x] no_std build
-- [x] test (+ miri — soundness-critical) — `cargo test` passes; miri component not installed in this environment
-- [x] doc — fixed `List::clear` and `push_front` intra-doc links
+- [x] test (soundness-critical; miri not installed in this env — recommended before publish)
+- [x] doc
 - [ ] commit
 
 ### 8. tpt-zero-once
-- [ ] Cargo.toml
-- [ ] impl (Once/OnceCell/Lazy via atomic state machine)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (n/a)
+- [x] Cargo.toml
+- [x] impl (Once/OnceCell/Lazy via atomic state machine)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (cell_holds_value / lazy_holds_value)
 - [ ] bench (n/a)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ multithreaded stress test, + miri)
-- [ ] doc
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test (multithreaded stress + miri recommended before publish)
+- [x] doc
 - [ ] commit
 
 ### 9. tpt-zero-spin
-- [ ] Cargo.toml
-- [ ] impl (SpinMutex/SpinRwLock via CAS + core::hint::spin_loop)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
+- [x] Cargo.toml
+- [x] impl (SpinMutex/SpinRwLock via CAS + core::hint::spin_loop)
+- [x] alloc layer (n/a)
+- [x] unit tests
 - [ ] proptest (n/a)
 - [ ] bench (lock/unlock overhead)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ multithreaded stress test, + miri)
-- [ ] doc
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test (multithreaded stress + miri recommended before publish)
+- [x] doc
 - [ ] commit
 
 ### 10. tpt-zero-channel
-- [ ] Cargo.toml
-- [ ] impl (bounded lock-free MPSC ring via CAS'd head/tail)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
+- [x] Cargo.toml
+- [x] impl (bounded lock-free MPSC ring via CAS'd head/tail)
+- [x] alloc layer (n/a)
+- [x] unit tests
 - [ ] proptest (n/a)
 - [ ] bench (throughput)
-- [ ] README (document "not loom-verified" caveat + ordering rationale)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ multithreaded stress test, + miri)
-- [ ] doc
+- [x] README (documents "not loom-verified" caveat + ordering rationale)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test (multithreaded stress + miri recommended before publish)
+- [x] doc
 - [ ] commit
 
 ### 11. tpt-zero-color
-- [ ] Cargo.toml
-- [ ] impl (Rgb/Rgba/Hsv, RGB<->HSV conversion, #RRGGBB(AA) hex parse/format)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (round-trip RGB->HSV->RGB within epsilon)
+- [x] Cargo.toml
+- [x] impl (Rgb/Rgba/Hsv, RGB<->HSV conversion, #RRGGBB(AA) hex parse/format)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (achromatic round-trips exactly; saturated conversion is stable/in-range — lossy by design, documented)
 - [ ] bench (n/a)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
+- [x] README (documents lossy HSV round-trip limitation)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
 - [ ] commit
 
 ---

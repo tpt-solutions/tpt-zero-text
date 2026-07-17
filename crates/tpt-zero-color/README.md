@@ -21,6 +21,13 @@ let hsv = c.to_hsv();
 
 `#![no_std]` with **zero** external dependencies.
 
+## HSV round-trip
+
+`Rgb` <-> `Hsv` conversion is **lossy** for saturated colors: the 8-bit
+`h`/`s`/`v` fields cannot represent every one of the 16.7M possible `Rgb`
+values. Achromatic (grayscale, `s == 0`) colors round-trip exactly; other
+colors are approximate.
+
 ## License
 
 Licensed under MIT or Apache-2.0 at your option.
