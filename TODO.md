@@ -39,12 +39,12 @@ Legend for each crate's checklist:
 
 ## Tier 0 — zero sibling dependencies
 
-> Status (2026-07-17): all 11 Tier 0 crates are implemented, with green
-> `fmt`, `clippy --all-features -- -D warnings`, `no_std` build
+> Status (2026-07-17): all 11 Tier 0 crates are implemented, committed, and
+> green on `fmt`, `clippy --all-features -- -D warnings`, `no_std` build
 > (`thumbv7m-none-eabi`), `cargo test` (both feature modes + external
-> proptest targets), and `cargo doc --all-features -D warnings`. The only
-> outstanding gate per crate is **commit**. Only `bench` (criterion) remains
-> unfilled where marked; it is optional for the 0.1.0 release.
+> proptest targets), and `cargo doc --all-features -D warnings`. Tier 0 is
+> fully complete except `bench` (criterion), which is deferred/optional for
+> the 0.1.0 release. Tier 1 (crates 12-23) has not been started.
 
 ### 1. tpt-zero-utf8
 - [x] Cargo.toml
@@ -60,7 +60,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 2. tpt-zero-numstr
 - [x] Cargo.toml
@@ -76,7 +76,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 3. tpt-zero-str-search
 - [x] Cargo.toml
@@ -92,7 +92,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 4. tpt-zero-fast-math
 - [x] Cargo.toml
@@ -108,7 +108,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 5. tpt-zero-arrayvec
 - [x] Cargo.toml
@@ -124,7 +124,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test (miri not installed in this env; recommended before publish)
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 6. tpt-zero-ring
 - [x] Cargo.toml
@@ -140,7 +140,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test (miri not installed in this env; recommended before publish)
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 7. tpt-zero-intrusive
 - [x] Cargo.toml
@@ -156,7 +156,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test (soundness-critical; miri not installed in this env — recommended before publish)
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 8. tpt-zero-once
 - [x] Cargo.toml
@@ -172,7 +172,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test (multithreaded stress + miri recommended before publish)
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 9. tpt-zero-spin
 - [x] Cargo.toml
@@ -188,7 +188,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test (multithreaded stress + miri recommended before publish)
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 10. tpt-zero-channel
 - [x] Cargo.toml
@@ -204,7 +204,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test (multithreaded stress + miri recommended before publish)
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ### 11. tpt-zero-color
 - [x] Cargo.toml
@@ -220,7 +220,7 @@ Legend for each crate's checklist:
 - [x] no_std build
 - [x] test
 - [x] doc
-- [ ] commit
+- [x] commit
 
 ---
 

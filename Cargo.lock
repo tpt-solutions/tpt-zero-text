@@ -265,6 +265,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-arraystring"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-arrayvec",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "tpt-zero-arrayvec"
 version = "0.1.0"
 dependencies = [
@@ -300,6 +309,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-linear-map"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-arrayvec",
+]
+
+[[package]]
 name = "tpt-zero-numstr"
 version = "0.1.0"
 dependencies = [
@@ -311,6 +328,14 @@ name = "tpt-zero-once"
 version = "0.1.0"
 dependencies = [
  "proptest",
+]
+
+[[package]]
+name = "tpt-zero-pool"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-arrayvec",
 ]
 
 [[package]]
