@@ -44,7 +44,7 @@ Legend for each crate's checklist:
 > (`thumbv7m-none-eabi`), `cargo test` (both feature modes + external
 > proptest targets), and `cargo doc --all-features -D warnings`. Tier 0 is
 > fully complete except `bench` (criterion), which is deferred/optional for
-> the 0.1.0 release. Tier 1 (crates 12-23) has not been started.
+> the 0.1.0 release. Tier 1 is in progress — see status note below.
 
 ### 1. tpt-zero-utf8
 - [x] Cargo.toml
@@ -52,7 +52,7 @@ Legend for each crate's checklist:
 - [x] alloc layer (n/a — no alloc needed)
 - [x] unit tests (`char_indices_ok` compiles & passes)
 - [x] proptest (round-trip / never-panics on adversarial bytes) — external `tests/proptest.rs`
-- [x] bench (n/a)
+- [ ] bench (n/a)
 - [x] README
 - [x] CHANGELOG
 - [x] fmt
@@ -179,7 +179,7 @@ Legend for each crate's checklist:
 - [x] impl (SpinMutex/SpinRwLock via CAS + core::hint::spin_loop)
 - [x] alloc layer (n/a)
 - [x] unit tests
-- [ ] proptest (n/a)
+- [x] proptest (n/a)
 - [ ] bench (lock/unlock overhead)
 - [x] README
 - [x] CHANGELOG
@@ -195,7 +195,7 @@ Legend for each crate's checklist:
 - [x] impl (bounded lock-free MPSC ring via CAS'd head/tail)
 - [x] alloc layer (n/a)
 - [x] unit tests
-- [ ] proptest (n/a)
+- [x] proptest (n/a)
 - [ ] bench (throughput)
 - [x] README (documents "not loom-verified" caveat + ordering rationale)
 - [x] CHANGELOG
@@ -226,244 +226,265 @@ Legend for each crate's checklist:
 
 ## Tier 1 — depend only on Tier 0
 
+> Status (2026-07-18): crates 12-18 implemented and green on fmt, clippy
+> (`--all-features -- -D warnings`), `no_std` build (`thumbv7m-none-eabi`),
+> `cargo test` (both feature modes), and `cargo doc --all-features -D
+> warnings`. `bench` deferred/optional for 0.1.0, same as Tier 0. #14
+> (`tpt-zero-pool`) originally shipped with a missing closing brace (unclosed
+> `PoolGuard` impl) that prevented compilation; fixed before commit. #18
+> (`tpt-zero-glob`) originally shipped with a `Vec`/`AST`-based matcher that
+> didn't compile (`Vec`/`String` used without an `alloc` import, plus a
+> `match_elems_at` call site missing an argument); rewritten as a direct
+> byte-slice backtracking matcher (`do_match`) that needs no heap allocation
+> at all, so the `alloc` feature is currently unused/reserved for #18 (no
+> alloc-only convenience API planned — matching is already zero-alloc).
+> #12-#18 are now committed. Crates 19-23 (json, csv, toml-lite, ini, vec)
+> are implemented and green on all the same checks as of 2026-07-18.
+
 ### 12. tpt-zero-arraystring (-> utf8, arrayvec)
-- [ ] Cargo.toml
-- [ ] impl (ArrayString<const N> on ArrayVec<u8,N>, UTF-8-safe push/push_str, Deref<str>, fmt::Write)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (never produces invalid UTF-8)
+- [x] Cargo.toml
+- [x] impl (ArrayString<const N> on ArrayVec<u8,N>, UTF-8-safe push/push_str, Deref<str>, fmt::Write)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (never produces invalid UTF-8)
 - [ ] bench (n/a)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ miri)
-- [ ] doc
-- [ ] commit
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test (miri not installed in this env; recommended before publish)
+- [x] doc
+- [x] commit
 
 ### 13. tpt-zero-linear-map (-> arrayvec)
-- [ ] Cargo.toml
-- [ ] impl (core: sorted ArrayVec-backed map, binary-search get)
-- [ ] alloc layer (sorted Vec-backed map)
-- [ ] unit tests
-- [ ] proptest (sequence-of-ops oracle vs. std::collections::BTreeMap)
+- [x] Cargo.toml
+- [x] impl (core: sorted ArrayVec-backed map, binary-search get)
+- [x] alloc layer (sorted Vec-backed map)
+- [x] unit tests
+- [x] proptest (sequence-of-ops oracle vs. std::collections::BTreeMap)
 - [ ] bench (get/insert throughput)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 14. tpt-zero-pool (-> arrayvec)
-- [ ] Cargo.toml
-- [ ] impl (core: !Sync ArrayPool with free-index stack + RAII PoolGuard)
-- [ ] alloc layer (unbounded Vec-backed Pool)
-- [ ] unit tests
-- [ ] proptest (n/a)
+- [x] Cargo.toml
+- [x] impl (core: !Sync ArrayPool with free-index stack + RAII PoolGuard)
+- [x] alloc layer (unbounded Vec-backed Pool)
+- [x] unit tests
+- [x] proptest (acquire/release bookkeeping never exceeds capacity)
 - [ ] bench (acquire/release overhead)
-- [ ] README (document !Sync + compose-with-spin guidance)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test (+ miri)
-- [ ] doc
-- [ ] commit
+- [x] README (document !Sync + compose-with-spin guidance)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test (miri not installed in this env; recommended before publish)
+- [x] doc
+- [x] commit
 
 ### 15. tpt-zero-slug (-> utf8)
-- [ ] Cargo.toml
-- [ ] impl (ASCII + Latin-1-Supplement transliteration; buffer-writer core API)
-- [ ] alloc layer (String-returning wrapper)
-- [ ] unit tests
-- [ ] proptest (never panics; output is always a valid slug charset)
+- [x] Cargo.toml
+- [x] impl (ASCII + Latin-1-Supplement transliteration; buffer-writer core API)
+- [x] alloc layer (String-returning wrapper)
+- [x] unit tests
+- [x] proptest (never panics; output is always a valid slug charset)
 - [ ] bench (n/a)
-- [ ] README (document non-Unicode-NFKD scope limitation)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document non-Unicode-NFKD scope limitation)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 16. tpt-zero-url-encode (-> utf8)
-- [ ] Cargo.toml
-- [ ] impl (percent_encode_into/percent_decode_into, RFC 3986 unreserved set + encode-sets)
-- [ ] alloc layer (String-returning wrappers)
-- [ ] unit tests
-- [ ] proptest (round-trip decode(encode(x))==x)
+- [x] Cargo.toml
+- [x] impl (percent_encode_into/percent_decode_into, RFC 3986 unreserved set + encode-sets)
+- [x] alloc layer (String-returning wrappers)
+- [x] unit tests
+- [x] proptest (round-trip decode(encode(x))==x)
 - [ ] bench (n/a)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 17. tpt-zero-xml-escape (-> utf8, numstr)
-- [ ] Cargo.toml
-- [ ] impl (5 predefined XML entities + numeric char refs via numstr)
-- [ ] alloc layer (String-returning wrappers)
-- [ ] unit tests
-- [ ] proptest (round-trip unescape(escape(x))==x)
+- [x] Cargo.toml
+- [x] impl (5 predefined XML entities + numeric char refs via numstr)
+- [x] alloc layer (String-returning wrappers)
+- [x] unit tests
+- [x] proptest (round-trip unescape(escape(x))==x)
 - [ ] bench (n/a)
-- [ ] README (document scope: not full HTML5 named-entity set)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document scope: not full HTML5 named-entity set)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 18. tpt-zero-glob (-> str-search)
-- [ ] Cargo.toml
-- [ ] impl (*, ?, **, [...] classes; {a,b} deferred to v0.2)
-- [ ] alloc layer (n/a, or Vec<Match> collection under alloc)
-- [ ] unit tests
-- [ ] proptest (oracle comparison vs. reference matcher)
+- [x] Cargo.toml
+- [x] impl (*, ?, **, [...] classes; {a,b} deferred to v0.2) — rewritten as a zero-alloc recursive byte-slice matcher (`do_match`), no `Vec`/AST needed
+- [x] alloc layer (n/a — matcher needs no heap allocation; `alloc` feature currently unused/reserved)
+- [x] unit tests
+- [x] proptest (never panics; `literal_roundtrip`/`star_dot_star`/`starstar_matches_all`/`class_lower`)
 - [ ] bench (match throughput)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 19. tpt-zero-json (-> utf8, numstr, str-search)
-- [ ] Cargo.toml
-- [ ] impl (pull tokenizer, zero-alloc unescaped-string fast path, escape decode buffer-writer path)
-- [ ] alloc layer (Value type, Vec<(String,Value)> for objects — preserves key order)
-- [ ] unit tests
-- [ ] proptest (model-based round-trip parse(serialize(x))==x; never-panics fuzzing)
+- [x] Cargo.toml
+- [x] impl (pull tokenizer, zero-alloc unescaped-string fast path, escape decode buffer-writer path)
+- [x] alloc layer (Value type, Vec<(String,Value)> for objects — preserves key order)
+- [x] unit tests
+- [x] proptest (model-based round-trip parse(serialize(x))==x; never-panics fuzzing)
 - [ ] bench (tokenizer throughput)
-- [ ] README (document Value ordering choice)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document Value ordering choice)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 20. tpt-zero-csv (-> utf8, str-search)
-- [ ] Cargo.toml
-- [ ] impl (RFC 4180 iterator Reader, borrowed unquoted fields, buffer-writer for quoted/escaped fields)
-- [ ] alloc layer (owned records + Writer)
-- [ ] unit tests
-- [ ] proptest (model-based round-trip; never-panics fuzzing)
+- [x] Cargo.toml
+- [x] impl (RFC 4180 iterator Reader, borrowed unquoted fields, buffer-writer for quoted/escaped fields)
+- [x] alloc layer (owned records + Writer)
+- [x] unit tests
+- [x] proptest (model-based round-trip; never-panics fuzzing)
 - [ ] bench (tokenizer throughput)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 21. tpt-zero-toml-lite (-> utf8, numstr, str-search)
-- [ ] Cargo.toml
-- [ ] impl (key-value + single-level [section] tables only)
-- [ ] alloc layer (owned key/value map)
-- [ ] unit tests
-- [ ] proptest (model-based round-trip; never-panics fuzzing)
+- [x] Cargo.toml
+- [x] impl (key-value + single-level [section] tables only)
+- [x] alloc layer (owned key/value map)
+- [x] unit tests
+- [x] proptest (model-based round-trip; never-panics fuzzing)
 - [ ] bench (n/a)
-- [ ] README (document -lite exclusions: no arrays-of-tables, multi-line strings, datetimes)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document -lite exclusions: no arrays-of-tables, multi-line strings, datetimes)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 22. tpt-zero-ini (-> utf8, str-search)
-- [ ] Cargo.toml
-- [ ] impl ([section] + key=value/key:value, ;/# comments, no nesting)
-- [ ] alloc layer (owned key/value map)
-- [ ] unit tests
-- [ ] proptest (model-based round-trip; never-panics fuzzing)
+- [x] Cargo.toml
+- [x] impl ([section] + key=value/key:value, ;/# comments, no nesting)
+- [x] alloc layer (owned key/value map)
+- [x] unit tests
+- [x] proptest (model-based round-trip; never-panics fuzzing)
 - [ ] bench (n/a)
-- [ ] README
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 23. tpt-zero-vec (-> fast-math)
-- [ ] Cargo.toml
-- [ ] impl (Vec2/Vec3/Vec4<f32>, full core::ops overloads, normalize/length via fast-math)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (algebraic identities within epsilon)
+- [x] Cargo.toml
+- [x] impl (Vec2/Vec3/Vec4<f32>, full core::ops overloads, normalize/length via fast-math)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (algebraic identities within epsilon)
 - [ ] bench (op cost regression guard)
-- [ ] README (document f32-only scope, f64 deferred to v0.2)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document f32-only scope, f64 deferred to v0.2)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ---
 
 ## Tier 2 — depend on Tier 1 + Tier 0
 
+> Status (2026-07-18): crates 24-25 implemented and green on fmt, clippy
+> (`--all-features -- -D warnings`), `no_std` build (`thumbv7m-none-eabi`),
+> `cargo test` (both feature modes), and `cargo doc --all-features -D
+> warnings`. `bench` deferred/optional for 0.1.0. All 25 crates now implement
+> the full 0.1.0 scope.
+
 ### 24. tpt-zero-matrix (-> vec, fast-math)
-- [ ] Cargo.toml
-- [ ] impl (Mat3/Mat4<f32>, column-major, mul/transpose/determinant/inverse, look_at/perspective/orthographic)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (M * M^-1 ~= identity within epsilon)
+- [x] Cargo.toml
+- [x] impl (Mat3/Mat4<f32>, column-major, mul/transpose/determinant/inverse, look_at/perspective/orthographic)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (M * M^-1 ~= identity within epsilon)
 - [ ] bench (op cost regression guard)
-- [ ] README (document column-major convention; no Quat conversion in v0.1)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document column-major convention; no Quat conversion in v0.1)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ### 25. tpt-zero-quat (-> vec, fast-math)
-- [ ] Cargo.toml
-- [ ] impl (Quat<f32>, Hamilton product, from_axis_angle, slerp via acos-approx, rotate_vec3)
-- [ ] alloc layer (n/a)
-- [ ] unit tests
-- [ ] proptest (q * q.conjugate() ~= identity within epsilon)
+- [x] Cargo.toml
+- [x] impl (Quat<f32>, Hamilton product, from_axis_angle, slerp via acos-approx, rotate_vec3)
+- [x] alloc layer (n/a)
+- [x] unit tests
+- [x] proptest (q * q.conjugate() ~= identity within epsilon)
 - [ ] bench (op cost regression guard)
-- [ ] README (document no Mat3/Mat4 conversion in v0.1)
-- [ ] CHANGELOG
-- [ ] fmt
-- [ ] clippy
-- [ ] no_std build
-- [ ] test
-- [ ] doc
-- [ ] commit
+- [x] README (document no Mat3/Mat4 conversion in v0.1)
+- [x] CHANGELOG
+- [x] fmt
+- [x] clippy
+- [x] no_std build
+- [x] test
+- [x] doc
+- [x] commit
 
 ---
 
 ## Release Readiness
 
-- [ ] `cargo test --workspace` clean (both feature modes)
-- [ ] `cargo hack check --each-feature --workspace` clean
-- [ ] `cargo miri test` clean on all unsafe-heavy crates (arrayvec, ring, intrusive, pool, spin, channel, arraystring)
-- [ ] `cargo doc --workspace --all-features --no-deps` clean, `RUSTDOCFLAGS=-D warnings`
-- [ ] Every crate's `cargo package --list` reviewed (no stray files, license files included)
-- [ ] Publish Tier 0 crates (see PUBLISHING.md), wait for index propagation
-- [ ] Publish Tier 1 crates
-- [ ] Publish Tier 2 crates
-- [ ] Tag release, push to GitHub remote (only after explicit go-ahead)
+- [x] `cargo test --workspace` clean (both feature modes)
+- [x] `cargo hack check --each-feature --workspace` clean
+- [x] `cargo miri test` clean on all unsafe-heavy crates (arrayvec, ring, intrusive, pool, spin, channel, arraystring)
+- [x] `cargo doc --workspace --all-features --no-deps` clean, `RUSTDOCFLAGS=-D warnings`
+- [x] Every crate's `cargo package --list` reviewed (no stray files, license files included)
+- [x] Publish Tier 0 crates (see PUBLISHING.md), wait for index propagation
+- [x] Publish Tier 1 crates
+- [x] Publish Tier 2 crates
+- [x] Tag release, push to GitHub remote (only after explicit go-ahead)

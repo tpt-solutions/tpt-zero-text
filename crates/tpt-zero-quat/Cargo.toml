@@ -1,0 +1,22 @@
+[package]
+name = "tpt-zero-quat"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Small f32 quaternion math (Quat) for #![no_std]. #![no_std], zero dependencies, fast-math backed."
+categories = ["no-std", "mathematics", "game-development"]
+keywords = ["quaternion", "math", "no_std", "quat", "rotation"]
+
+[dependencies]
+tpt-zero-vec = { path = "../tpt-zero-vec", version = "0.1.0" }
+tpt-zero-fast-math = { path = "../tpt-zero-fast-math", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []

@@ -295,6 +295,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-csv"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "tpt-zero-fast-math"
 version = "0.1.0"
 dependencies = [
@@ -310,10 +319,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-ini"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "tpt-zero-intrusive"
 version = "0.1.0"
 dependencies = [
  "proptest",
+]
+
+[[package]]
+name = "tpt-zero-json"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-numstr",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
 ]
 
 [[package]]
@@ -322,6 +350,15 @@ version = "0.1.0"
 dependencies = [
  "proptest",
  "tpt-zero-arrayvec",
+]
+
+[[package]]
+name = "tpt-zero-matrix"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-fast-math",
+ "tpt-zero-vec",
 ]
 
 [[package]]
@@ -344,6 +381,15 @@ version = "0.1.0"
 dependencies = [
  "proptest",
  "tpt-zero-arrayvec",
+]
+
+[[package]]
+name = "tpt-zero-quat"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-fast-math",
+ "tpt-zero-vec",
 ]
 
 [[package]]
@@ -376,6 +422,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "tpt-zero-toml-lite"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-numstr",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "tpt-zero-url-encode"
 version = "0.1.0"
 dependencies = [
@@ -388,6 +444,14 @@ name = "tpt-zero-utf8"
 version = "0.1.0"
 dependencies = [
  "proptest",
+]
+
+[[package]]
+name = "tpt-zero-vec"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-fast-math",
 ]
 
 [[package]]

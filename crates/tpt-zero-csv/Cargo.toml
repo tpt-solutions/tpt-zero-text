@@ -1,0 +1,22 @@
+[package]
+name = "tpt-zero-csv"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Zero-alloc RFC 4180 CSV reader plus an alloc-backed owned record/Writer API. #![no_std] core, dependency-free."
+categories = ["no-std", "encoding", "parser-implementations"]
+keywords = ["csv", "parser", "no_std", "rfc4180"]
+
+[dependencies]
+tpt-zero-utf8 = { path = "../tpt-zero-utf8", version = "0.1.0" }
+tpt-zero-str-search = { path = "../tpt-zero-str-search", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []

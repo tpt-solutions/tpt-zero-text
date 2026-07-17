@@ -1,0 +1,23 @@
+[package]
+name = "tpt-zero-toml-lite"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "A minimal TOML parser (key-value + single-level [section] tables) for #![no_std]. #![no_std] core, dependency-free."
+categories = ["no-std", "encoding", "parser-implementations"]
+keywords = ["toml", "parser", "no_std", "config"]
+
+[dependencies]
+tpt-zero-utf8 = { path = "../tpt-zero-utf8", version = "0.1.0" }
+tpt-zero-numstr = { path = "../tpt-zero-numstr", version = "0.1.0" }
+tpt-zero-str-search = { path = "../tpt-zero-str-search", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []
