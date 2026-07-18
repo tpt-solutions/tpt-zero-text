@@ -87,13 +87,13 @@ jobs:
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: miri
-      - run: cargo miri test -p tpt-zero-arrayvec --all-features
-      - run: cargo miri test -p tpt-zero-ring --all-features
-      - run: cargo miri test -p tpt-zero-intrusive --all-features
-      - run: cargo miri test -p tpt-zero-pool --all-features
-      - run: cargo miri test -p tpt-zero-spin --all-features
+      - run: cargo miri test -p out-zero-arrayvec --all-features
+      - run: cargo miri test -p out-zero-ring --all-features
+      - run: cargo miri test -p out-zero-intrusive --all-features
+      - run: cargo miri test -p out-zero-pool --all-features
+      - run: cargo miri test -p out-zero-spin --all-features
       - run: cargo miri test -p tpt-zero-channel --all-features
-      - run: cargo miri test -p tpt-zero-arraystring --all-features
+      - run: cargo miri test -p out-zero-arraystring --all-features
 
   doc:
     name: docs

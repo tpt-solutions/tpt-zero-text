@@ -477,6 +477,26 @@ Legend for each crate's checklist:
 
 ---
 
+## Publish-readiness review (2026-07-18)
+
+All 25 crates reached a fully green 0.1.0 state, so before spending the effort of a real
+crates.io release they were audited against the existing crates.io ecosystem: does each
+crate do something genuinely distinct, or would it just be a redundant clone of an
+established, better-resourced `no_std` incumbent (`arrayvec`, `spin`, `percent-encoding`,
+`csv-core`, `serde-json-core`, `glam`, `intrusive-collections`, etc.)?
+
+Result: 12 crates were kept for publishing (`tpt-zero-utf8`, `-numstr`, `-str-search`,
+`-fast-math`, `-channel`, `-color`, `-slug`, `-glob`, `-json`, `-vec`, `-matrix`, `-quat`)
+on the strength of either a structural need (foundation for a kept crate) or a real
+differentiator (e.g. `tpt-zero-json` needs no `serde` dependency; the
+`fast-math`/`vec`/`matrix`/`quat` cluster is genuinely `libm`-free where `glam` is not).
+The other 13 crates (`arrayvec`, `ring`, `intrusive`, `once`, `spin`, `arraystring`,
+`linear-map`, `pool`, `url-encode`, `xml-escape`, `csv`, `toml-lite`, `ini`) were renamed
+from `tpt-zero-` to `out-zero-` and marked `publish = false` — they remain in the repo,
+fully implemented and tested, as internal/reference implementations. Full per-crate
+rationale is in the root [README.md](README.md) crates table and in each renamed crate's
+own README banner. [PUBLISHING.md](PUBLISHING.md) reflects the updated 12-crate tier order.
+
 ## Release Readiness
 
 - [x] `cargo test --workspace` clean (both feature modes)

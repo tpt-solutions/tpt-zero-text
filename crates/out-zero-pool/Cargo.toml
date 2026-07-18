@@ -1,0 +1,22 @@
+[package]
+name = "out-zero-pool"
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Fixed-capacity object pool with RAII guards. #![no_std], zero dependencies, !Sync by design."
+categories = ["no-std", "data-structures", "memory-management"]
+keywords = ["pool", "object-pool", "no_std", "allocation", "raii"]
+
+[dependencies]
+out-zero-arrayvec = { path = "../out-zero-arrayvec", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []
+alloc = []

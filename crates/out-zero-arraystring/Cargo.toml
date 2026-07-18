@@ -1,0 +1,22 @@
+[package]
+name = "out-zero-arraystring"
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "String-like growable buffer backed by a fixed-size array. #![no_std], zero dependencies, UTF-8-safe."
+categories = ["no-std", "data-structures", "text-processing"]
+keywords = ["arraystring", "no_std", "string", "fixed-capacity", "utf8"]
+
+[dependencies]
+tpt-zero-utf8 = { path = "../tpt-zero-utf8", version = "0.1.0" }
+out-zero-arrayvec = { path = "../out-zero-arrayvec", version = "0.1.0" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

@@ -1,0 +1,20 @@
+[package]
+name = "out-zero-intrusive"
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Intrusive doubly-linked list via embedded Link field. #![no_std], zero dependencies."
+categories = ["no-std", "data-structures"]
+keywords = ["intrusive", "linked-list", "no_std"]
+
+[dependencies]
+
+[dev-dependencies]
+proptest.workspace = true
+
+[features]
+default = []

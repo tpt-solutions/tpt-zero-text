@@ -262,7 +262,7 @@ mod proptests {
         #[test]
         fn rotation_preserves_length(
             ax in -1.0f32..1.0, ay in -1.0f32..1.0, az in -1.0f32..1.0,
-            ang in -3.14f32..3.14,
+            ang in -core::f32::consts::PI..core::f32::consts::PI,
             x in -10.0f32..10.0, y in -10.0f32..10.0, z in -10.0f32..10.0) {
             let q = Quat::from_axis_angle(Vec3::new(ax, ay, az), ang);
             let v = Vec3::new(x, y, z);

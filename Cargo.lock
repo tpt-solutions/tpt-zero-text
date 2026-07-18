@@ -108,6 +108,111 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50"
 
 [[package]]
+name = "out-zero-arraystring"
+version = "0.1.0"
+dependencies = [
+ "out-zero-arrayvec",
+ "proptest",
+ "tpt-zero-utf8",
+]
+
+[[package]]
+name = "out-zero-arrayvec"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-csv"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
+]
+
+[[package]]
+name = "out-zero-ini"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
+]
+
+[[package]]
+name = "out-zero-intrusive"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-linear-map"
+version = "0.1.0"
+dependencies = [
+ "out-zero-arrayvec",
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-once"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-pool"
+version = "0.1.0"
+dependencies = [
+ "out-zero-arrayvec",
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-ring"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-spin"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+]
+
+[[package]]
+name = "out-zero-toml-lite"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-numstr",
+ "tpt-zero-str-search",
+ "tpt-zero-utf8",
+]
+
+[[package]]
+name = "out-zero-url-encode"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-utf8",
+]
+
+[[package]]
+name = "out-zero-xml-escape"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "tpt-zero-numstr",
+ "tpt-zero-utf8",
+]
+
+[[package]]
 name = "ppv-lite86"
 version = "0.2.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -265,22 +370,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tpt-zero-arraystring"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-arrayvec",
- "tpt-zero-utf8",
-]
-
-[[package]]
-name = "tpt-zero-arrayvec"
-version = "0.1.0"
-dependencies = [
- "proptest",
-]
-
-[[package]]
 name = "tpt-zero-channel"
 version = "0.1.0"
 dependencies = [
@@ -292,15 +381,6 @@ name = "tpt-zero-color"
 version = "0.1.0"
 dependencies = [
  "proptest",
-]
-
-[[package]]
-name = "tpt-zero-csv"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-str-search",
- "tpt-zero-utf8",
 ]
 
 [[package]]
@@ -319,22 +399,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tpt-zero-ini"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-str-search",
- "tpt-zero-utf8",
-]
-
-[[package]]
-name = "tpt-zero-intrusive"
-version = "0.1.0"
-dependencies = [
- "proptest",
-]
-
-[[package]]
 name = "tpt-zero-json"
 version = "0.1.0"
 dependencies = [
@@ -342,14 +406,6 @@ dependencies = [
  "tpt-zero-numstr",
  "tpt-zero-str-search",
  "tpt-zero-utf8",
-]
-
-[[package]]
-name = "tpt-zero-linear-map"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-arrayvec",
 ]
 
 [[package]]
@@ -369,34 +425,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "tpt-zero-once"
-version = "0.1.0"
-dependencies = [
- "proptest",
-]
-
-[[package]]
-name = "tpt-zero-pool"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-arrayvec",
-]
-
-[[package]]
 name = "tpt-zero-quat"
 version = "0.1.0"
 dependencies = [
  "proptest",
  "tpt-zero-fast-math",
  "tpt-zero-vec",
-]
-
-[[package]]
-name = "tpt-zero-ring"
-version = "0.1.0"
-dependencies = [
- "proptest",
 ]
 
 [[package]]
@@ -408,35 +442,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "tpt-zero-spin"
-version = "0.1.0"
-dependencies = [
- "proptest",
-]
-
-[[package]]
 name = "tpt-zero-str-search"
 version = "0.1.0"
 dependencies = [
  "proptest",
-]
-
-[[package]]
-name = "tpt-zero-toml-lite"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-numstr",
- "tpt-zero-str-search",
- "tpt-zero-utf8",
-]
-
-[[package]]
-name = "tpt-zero-url-encode"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-utf8",
 ]
 
 [[package]]
@@ -452,15 +461,6 @@ version = "0.1.0"
 dependencies = [
  "proptest",
  "tpt-zero-fast-math",
-]
-
-[[package]]
-name = "tpt-zero-xml-escape"
-version = "0.1.0"
-dependencies = [
- "proptest",
- "tpt-zero-numstr",
- "tpt-zero-utf8",
 ]
 
 [[package]]

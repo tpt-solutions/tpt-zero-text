@@ -12,6 +12,12 @@ Before publishing anything:
 4. `cargo doc --workspace --all-features --no-deps` (with `RUSTDOCFLAGS=-D warnings`)
 5. CI green on the commit being published.
 
+Only the 12 crates below are published; the other 13 crates in `crates/` carry the
+`out-zero-` prefix and `publish = false` — they were judged redundant with an existing
+crates.io incumbent and are kept as internal/reference implementations only (see the
+root [README.md](README.md) and each crate's own README for the rationale). Do not add
+them to the lists below.
+
 ## Tier 0 (publish first, any order within the tier)
 
 ```
@@ -19,11 +25,6 @@ tpt-zero-utf8
 tpt-zero-numstr
 tpt-zero-str-search
 tpt-zero-fast-math
-tpt-zero-arrayvec
-tpt-zero-ring
-tpt-zero-intrusive
-tpt-zero-once
-tpt-zero-spin
 tpt-zero-channel
 tpt-zero-color
 ```
@@ -31,17 +32,9 @@ tpt-zero-color
 ## Tier 1 (publish after every Tier 0 crate is live on crates.io)
 
 ```
-tpt-zero-arraystring
-tpt-zero-linear-map
-tpt-zero-pool
 tpt-zero-slug
-tpt-zero-url-encode
-tpt-zero-xml-escape
 tpt-zero-glob
 tpt-zero-json
-tpt-zero-csv
-tpt-zero-toml-lite
-tpt-zero-ini
 tpt-zero-vec
 ```
 

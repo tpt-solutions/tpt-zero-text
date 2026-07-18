@@ -267,7 +267,7 @@ mod tests {
         use core::fmt::Write;
         let mut buf = [0u8; 64];
         let mut w = SlugWriter::new(&mut buf);
-        write!(w, "Hello, {}!", "Wörld").unwrap();
+        write!(w, "Hello, Wörld!").unwrap();
         assert_eq!(core::str::from_utf8(w.as_bytes()).unwrap(), "hello-woerld");
     }
 
