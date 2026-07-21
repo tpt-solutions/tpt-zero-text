@@ -7,7 +7,7 @@ license.workspace = true
 repository.workspace = true
 authors.workspace = true
 description = "Glob pattern matching (*, ?, [...], **). #![no_std], zero dependencies, byte-slice based."
-categories = ["no-std", "text-processing", "pattern-matching"]
+categories = ["no-std", "text-processing"]
 keywords = ["glob", "pattern", "no_std", "match", "wildcard"]
 
 [dependencies]
